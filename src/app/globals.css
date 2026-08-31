@@ -1,26 +1,300 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+  Optimile Design System — light theme only (per current direction).
+  Brand: iris accent · graphite neutrals · Hanken Grotesk + IBM Plex Mono.
+*/
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Fonts — PP Neue Montreal everywhere (DOSS reference) */
+  --font-sans: var(--font-ppnm), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-ppnm), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-ppnm), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand — Blue scale (DOSS reference). Token names kept as --color-iris-* so
+     existing references pick up the new hue automatically. */
+  --color-iris-50: #eaf1ff;
+  --color-iris-100: #d6e3ff;
+  --color-iris-200: #aec6ff;
+  --color-iris-300: #7fa5ff;
+  --color-iris-400: #4f82fb;
+  --color-iris-500: #2a6bf5;
+  --color-iris-600: #1b54db;
+  --color-iris-700: #1743b0;
+  --color-iris-800: #163a8f;
+  --color-iris-900: #16346f;
+  --color-iris-950: #0f2148;
+
+  /* Neutral — Graphite scale */
+  --color-graphite-0: #ffffff;
+  --color-graphite-50: #f6f7fb;
+  --color-graphite-100: #eceef4;
+  --color-graphite-200: #d9dde9;
+  --color-graphite-300: #bac0d2;
+  --color-graphite-400: #8a91a7;
+  --color-graphite-500: #606782;
+  --color-graphite-600: #434a63;
+  --color-graphite-700: #2a3046;
+  --color-graphite-800: #191e30;
+  --color-graphite-900: #10131f;
+  --color-graphite-950: #0a0c15;
+
+  /* Semantic */
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+
+  /* Roles */
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-accent: var(--accent);
+  --color-accent-solid: var(--accent-solid);
+  --color-cta: var(--cta);
+  --color-cta-ink: var(--cta-ink);
+  --color-cta-hover: var(--cta-hover);
+
+  /* Radius */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-quart: cubic-bezier(0.5, 0, 0.75, 0);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Light — warm off-white (DOSS) with a blue accent */
+  --ground: #f6f4ef;
+  --surface: #ffffff;
+  --surface-2: #eeeae2;
+  --line: rgba(26, 22, 16, 0.10);
+  --line-strong: rgba(26, 22, 16, 0.17);
+  --ink: #1a1611;
+  --ink-soft: #78736e;
+  --ink-faint: #a9a39a;
+  --accent: #1b54db;
+  --accent-solid: #2a6bf5;
+  --cta: #1a1611;
+  --cta-ink: #ffffff;
+  --cta-hover: #33302a;
+
+  --ok: #16a34a;
+  --ok-soft: #e6f4ea;
+  --warn: #c2740a;
+  --warn-soft: #f6eddc;
+  --danger: #d23c30;
+  --danger-soft: #f8e7e3;
+  --info: #2a6bf5;
+  --info-soft: #e7f0ff;
+
+  --shadow-sm: 0 1px 2px rgba(26, 22, 16, 0.05);
+  --shadow-card: 0 1px 2px rgba(26, 22, 16, 0.04), 0 14px 30px -18px rgba(26, 22, 16, 0.16);
+  --glow: 0 30px 90px -40px rgba(42, 107, 245, 0.35);
+  --hero-wash:
+    radial-gradient(60% 70% at 78% -10%, rgba(42, 107, 245, 0.13), transparent 60%),
+    radial-gradient(50% 60% at 12% -20%, rgba(42, 107, 245, 0.07), transparent 55%);
+  --grid-line: rgba(26, 22, 16, 0.05);
+
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* PP Neue Montreal for display headings (DOSS reference). */
+  h1, h2 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  h3, h4 {
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Utilities */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+@utility hero-wash {
+  background: var(--hero-wash);
+}
+@utility shadow-card {
+  box-shadow: var(--shadow-card);
+}
+@utility shadow-soft {
+  box-shadow: var(--shadow-sm);
+}
+@utility glow {
+  box-shadow: var(--glow);
+}
+
+/* Fade the bottom of a bled product image into the ground. */
+.bleed-mask {
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+}
+
+/* Entrance — quiet fade/rise, disabled under reduced-motion. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rise {
+  animation: rise 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Mockup swap-in (used when the active domain changes). */
+@keyframes mockIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.mock-in { animation: mockIn 420ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Staggered reveal for rows inside a revealed block. */
+.stagger > * { animation: rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.stagger > *:nth-child(1) { animation-delay: 40ms; }
+.stagger > *:nth-child(2) { animation-delay: 100ms; }
+.stagger > *:nth-child(3) { animation-delay: 160ms; }
+.stagger > *:nth-child(4) { animation-delay: 220ms; }
+.stagger > *:nth-child(5) { animation-delay: 280ms; }
+.stagger > *:nth-child(6) { animation-delay: 340ms; }
+
+/* Ambient drift for the intelligence motif. */
+@keyframes drift {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: translate3d(0, -14px, 0) rotate(2deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+.drift { animation: drift 12s ease-in-out infinite; }
+@keyframes drift-slow {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: translate3d(0, 10px, 0) rotate(-2deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+.drift-slow { animation: drift-slow 16s ease-in-out infinite; }
+
+/* Workflow spinner (Running state in the lifecycle pipeline). */
+@keyframes wfspin { to { transform: rotate(360deg); } }
+.wf-spin { animation: wfspin 0.8s linear infinite; transform-origin: center; }
+
+/* A glowing pulse that travels across a connector when it activates. */
+@keyframes wfPulseAcross {
+  0% { left: -10%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+.wf-pulse-dot { animation: wfPulseAcross 700ms cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+/* Soft pulsing halo on the running card. */
+@keyframes wfRunGlow {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); }
+  50% { box-shadow: 0 0 28px -2px color-mix(in srgb, var(--accent) 55%, transparent); }
+}
+.wf-run-glow { animation: wfRunGlow 1.8s ease-in-out infinite; }
+
+/* Spring-ish pop for the completed check. */
+@keyframes wfCheckPop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+.wf-check-pop { animation: wfCheckPop 340ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* Routed connector line-draw for the lifecycle flowchart. */
+.wf-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 700ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.wf-path.is-drawn { stroke-dashoffset: 0; }
+
+/* Two-tone: scope a section to the dark palette. Everything inside that reads
+   from role tokens (surface, ink, line, accent, mocks) flips automatically. */
+.section-dark {
+  /* DOSS-style slate-navy dark with a bright blue accent */
+  --ground: #0b1322;
+  --surface: #131d33;
+  --surface-2: #1a2743;
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --ink: #eef2fb;
+  --ink-soft: #a7b3ca;
+  --ink-faint: #6e7c99;
+  --accent: #6ba0ff;
+  --accent-solid: #2a6bf5;
+  --cta: #ffffff;
+  --cta-ink: #0b1322;
+  --cta-hover: #e7ecf6;
+  --ok-soft: #0f2a1c;
+  --warn-soft: #2c2410;
+  --danger-soft: #331813;
+  --info-soft: #10254a;
+  --grid-line: rgba(255, 255, 255, 0.07);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 24px 48px -24px rgba(0, 0, 0, 0.85);
+  color-scheme: dark;
+}
+
+/* Scroll-triggered reveal (toggled by the Reveal component). */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible .reveal-item { opacity: 1; transform: none; }
+.reveal.is-visible .reveal-item:nth-child(1) { transition-delay: 40ms; }
+.reveal.is-visible .reveal-item:nth-child(2) { transition-delay: 110ms; }
+.reveal.is-visible .reveal-item:nth-child(3) { transition-delay: 180ms; }
+.reveal.is-visible .reveal-item:nth-child(4) { transition-delay: 250ms; }
+.reveal.is-visible .reveal-item:nth-child(5) { transition-delay: 320ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .rise { animation: none; opacity: 1; transform: none; }
+  .drift, .drift-slow { animation: none; }
+  .reveal-item { opacity: 1; transform: none; transition: none; }
 }
